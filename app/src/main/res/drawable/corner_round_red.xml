@@ -1,0 +1,6 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#FF9F80"/>
+    <size android:width="100dp" android:height="100dp"/>
+    <!--Или так (все углы за раз)-->
+    <corners android:radius="14dp"/>
+</shape>

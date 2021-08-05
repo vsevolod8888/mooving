@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Мой маршрут</string>
+    <string name="text_in_choosen_text_view">привет</string>
+    <string name="text_btn_all_routes">Все маршруты</string>
+    <string name="text_btn_delete_all">Удалить всё</string>
+    <string name="text_date_of_route">описание</string>
+    <string name="text_name_of_route">описание</string>
+    <string name="draw_route">Нарисовать</string>
+    <string name="archive_routes">Архивные Маршруты</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+</resources>

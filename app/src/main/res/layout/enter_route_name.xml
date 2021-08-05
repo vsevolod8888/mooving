@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true">
+
+
+        <EditText
+            android:id="@+id/editTextRouteName"
+            android:layout_width="346dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="40dp"
+            android:hint="Назовите маршрут"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.492"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <RadioGroup
+            android:id="@+id/radioGroupp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:theme="@style/CustomRadioTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextRouteName">
+
+            <RadioButton
+                android:id="@+id/radioButton1"
+                android:layout_width="0dp"
+                android:layout_height="98dp"
+                android:layout_weight="1"
+                android:text="6 секунд"
+                android:textSize="14dp"
+                tools:layout_editor_absoluteX="105dp"
+                tools:layout_editor_absoluteY="66dp" />
+
+            <RadioButton
+                android:id="@+id/radioButton2"
+                android:layout_width="0dp"
+                android:layout_height="98dp"
+                android:layout_weight="1"
+                android:text="1 минута"
+                android:textSize="14dp"
+                tools:layout_editor_absoluteX="105dp"
+                tools:layout_editor_absoluteY="66dp" />
+
+            <RadioButton
+                android:id="@+id/radioButton3"
+                android:layout_width="0dp"
+                android:layout_height="98dp"
+                android:layout_weight="1"
+                android:text="10 минут"
+                android:textSize="14dp"
+                tools:layout_editor_absoluteX="105dp"
+                tools:layout_editor_absoluteY="66dp" />
+        </RadioGroup>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonok"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_margin="4dp"
+            android:alpha="0.4"
+            android:text="Ок"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            app:cornerRadius="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/buttonbackn"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroupp"
+            app:layout_constraintVertical_bias="0.04" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonbackn"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_margin="4dp"
+            android:backgroundTint="#DCABAB"
+            android:text="Назад"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            app:cornerRadius="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/buttonok"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroupp"
+            app:layout_constraintVertical_bias="0.04" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

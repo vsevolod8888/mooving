@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true">
+
+
+        <EditText
+            android:id="@+id/editTextDrawRouteName"
+            android:layout_width="346dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="96dp"
+            android:gravity="center_horizontal"
+            android:hint="Назовите маршрут"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.753"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonokdrawing"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_margin="4dp"
+            android:alpha="0.4"
+            app:cornerRadius="16dp"
+
+            android:text="Ок"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/buttonbackdrawing"
+            app:layout_constraintTop_toBottomOf="@+id/editTextDrawRouteName"
+            app:layout_constraintVertical_bias="0.033" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonbackdrawing"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_margin="4dp"
+            android:alpha="0.4"
+
+            android:text="Назад"
+            app:cornerRadius="16dp"
+            android:backgroundTint="#DCABAB"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/buttonokdrawing"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextDrawRouteName"
+            app:layout_constraintVertical_bias="0.033" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

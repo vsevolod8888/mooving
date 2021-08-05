@@ -1,0 +1,8 @@
+<resources>
+
+    <style name="AlertDialogThemeee" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/allert_bacground</item>
+    </style>
+
+
+</resources>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item
+        android:id="@+id/download"
+        android:icon="@drawable/download"
+        android:title="Загрузить" />
+    <item
+        android:id="@+id/allRoutes"
+        android:icon="@drawable/all_routes"
+        android:title="Все маршруты" />
+    <item
+        android:id="@+id/deleteAll"
+        android:icon="@drawable/ic_delllll"
+        android:title="Удалить всё" />
+
+
+    <item android:title="Профиль">
+
+    <menu>
+        <item
+            android:id="@+id/loginOrLogout"
+            android:icon="@drawable/login"
+            android:title="Войти" />
+    </menu>
+    </item>
+
+</menu>

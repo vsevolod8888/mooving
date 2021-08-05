@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/fragmentCoordList">
+    <fragment
+        android:id="@+id/fragmentCoordList"
+        android:name="com.example.mymoovingpicture.FragmentCoordList"
+        android:label="FragmentCoordList" >
+        <action
+            android:id="@+id/action_fragmentCoordList_to_enterRouteName"
+            app:destination="@id/enterRouteName" />
+        <action
+            android:id="@+id/action_fragmentCoordList_to_mapChosenRoute"
+            app:destination="@id/mapChosenRoute" />
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <action
+            android:id="@+id/action_fragmentCoordList_to_mapAll"
+            app:destination="@id/mapAll" />
+        <action
+            android:id="@+id/action_fragmentCoordList_to_fragmentNameDrawingRoot"
+            app:destination="@id/fragmentNameDrawingRoot" />
+        <action
+            android:id="@+id/action_fragmentCoordList_to_fragmentArchiveList"
+            app:destination="@id/fragmentArchiveList" />
+        <action
+            android:id="@+id/action_fragmentCoordList_to_fragmentSignIn"
+            app:destination="@id/fragmentSignIn" />
+    </fragment>
+    <fragment
+        android:id="@+id/enterRouteName"
+        android:name="com.example.mymoovingpicture.EnterRouteName"
+        android:label="EnterRouteName" >
+
+        <action
+            android:id="@+id/action_enterRouteName_to_fragmentCoordList"
+            app:destination="@id/fragmentCoordList" />
+        <action
+            android:id="@+id/action_enterRouteName_to_mapNewRoute"
+            app:destination="@id/mapNewRoute" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapChosenRoute"
+        android:name="com.example.mymoovingpicture.MapChosenRoute"
+        android:label="MapChosenRoute" >
+        <action
+            android:id="@+id/action_mapChosenRoute_to_fragmentCoordList"
+            app:destination="@id/fragmentCoordList" />
+        <action
+            android:id="@+id/action_mapChosenRoute_to_mapNewRoute"
+            app:destination="@id/mapNewRoute" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapAll"
+        android:name="com.example.mymoovingpicture.mapAll"
+        android:label="mapAll" >
+        <action
+            android:id="@+id/action_mapAll_to_fragmentCoordList"
+            app:destination="@id/fragmentCoordList" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentNameDrawingRoot"
+        android:name="com.example.mymoovingpicture.FragmentNameDrawingRoot"
+        android:label="FragmentNameDrawingRoot" >
+        <action
+            android:id="@+id/action_fragmentNameDrawingRoot_to_mapDrawing"
+            app:destination="@id/mapDrawing" />
+        <action
+            android:id="@+id/action_fragmentNameDrawingRoot_to_fragmentCoordList"
+            app:destination="@id/fragmentCoordList" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapDrawing"
+        android:name="com.example.mymoovingpicture.MapDrawing"
+        android:label="MapDrawing" >
+        <action
+            android:id="@+id/action_mapDrawing_to_fragmentCoordList"
+            app:destination="@id/fragmentCoordList" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentArchiveList"
+        android:name="com.example.mymoovingpicturedagger.FragmentArchiveList"
+        android:label="FragmentDownloadList" >
+        <action
+            android:id="@+id/action_fragmentArchiveList_to_fragmentCoordList"
+            app:destination="@id/fragmentCoordList" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentSignIn"
+        android:name="com.example.mymoovingpicturedagger.FragmentSignIn"
+        android:label="FragmentSignIn" >
+        <action
+            android:id="@+id/action_fragmentSignIn_to_fragmentCoordList"
+            app:destination="@id/fragmentCoordList" />
+        <action
+            android:id="@+id/action_fragmentSignIn_to_fragmentAutrorization"
+            app:destination="@id/fragmentAutrorization" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentAutrorization"
+        android:name="com.example.mymoovingpicturedagger.FragmentAutrorization"
+        android:label="FragmentAutrorization" >
+        <action
+            android:id="@+id/action_fragmentAutrorization_to_fragmentCoordList"
+            app:destination="@id/fragmentCoordList" />
+        <action
+            android:id="@+id/action_fragmentAutrorization_to_fragmentSignIn"
+            app:destination="@id/fragmentSignIn" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapNewRoute"
+        android:name="com.example.mymoovingpicture.MapNewRoute"
+        android:label="MapNewRoute" >
+        <action
+            android:id="@+id/action_mapNewRoute_to_fragmentCoordList"
+            app:destination="@id/fragmentCoordList" />
+    </fragment>
+
+</navigation>
