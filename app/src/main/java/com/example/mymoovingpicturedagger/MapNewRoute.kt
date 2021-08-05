@@ -61,7 +61,7 @@ class MapNewRoute : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationButton
             val numberOfList = viewModelMapNewRoute.lastNumberOfList()
             viewModelMapNewRoute.getCoordByRecordNumber(numberOfList).observe( // список координат по последнему id из списка маршрутов
                 viewLifecycleOwner,
-                Observer {// наблюдаем за списком координат под последним номером
+                Observer {// наблюдаем за списком координат под посл
                     var distance = 0
                     val line: PolylineOptions = PolylineOptions()
                     line.clickable(true)
