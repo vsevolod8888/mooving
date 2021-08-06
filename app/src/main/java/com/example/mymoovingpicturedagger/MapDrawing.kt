@@ -26,8 +26,6 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.*
 import com.google.maps.android.SphericalUtil
-import kotlinx.android.synthetic.main.map_choosen_r.*
-import kotlinx.android.synthetic.main.map_drawing.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

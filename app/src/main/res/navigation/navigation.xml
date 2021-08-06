@@ -45,7 +45,7 @@
     </fragment>
     <fragment
         android:id="@+id/mapChosenRoute"
-        android:name="com.example.mymoovingpicture.MapChosenRoute"
+        android:name="com.example.mymoovingpicturedagger.MapChosenRoute"
         android:label="MapChosenRoute" >
         <action
             android:id="@+id/action_mapChosenRoute_to_fragmentCoordList"
@@ -56,7 +56,7 @@
     </fragment>
     <fragment
         android:id="@+id/mapAll"
-        android:name="com.example.mymoovingpicture.mapAll"
+        android:name="com.example.mymoovingpicture.MapAll"
         android:label="mapAll" >
         <action
             android:id="@+id/action_mapAll_to_fragmentCoordList"
