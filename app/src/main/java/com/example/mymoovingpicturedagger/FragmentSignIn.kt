@@ -1,14 +1,8 @@
 package com.example.mymoovingpicturedagger
 
-import android.app.Activity
 import android.app.Dialog
-import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -18,72 +12,55 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.mymoovingpicturedagger.dagger.App
-import com.example.mymoovingpicturedagger.repozitory.Repozitory
-import com.google.android.material.button.MaterialButton
-import com.google.gson.annotations.SerializedName
+import com.example.mymoovingpicturedagger.databinding.FragmentSigninBinding
+import com.example.mymoovingpicturedagger.helpers.hideKeyboard
+import com.example.mymoovingpicturedagger.helpers.viewBinding
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
+class FragmentSignIn : Fragment(R.layout.fragment_signin) {
 
-
-class FragmentSignIn : Fragment() {
-    lateinit var enterUserNameSignIn: EditText
-    lateinit var enterPasswordSignIn: EditText
-    lateinit var buttonOkGo: MaterialButton
-    lateinit var buttonNeedRegistration: MaterialButton
-    lateinit var cancelBtn:MaterialButton
-
-        @Inject
+    @Inject
     lateinit var viewModelProvider: ViewModelProvider.Factory //где исп.вью модель, вставляем провайдер
     private val viewmodelSignIn: FragmentSignInViewModel by viewModels { viewModelProvider }
     private val viewmodelMain: MainViewModel by viewModels { viewModelProvider }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        (requireActivity().application as App).getappComponent().inject(this)
-        var rootView: View = inflater.inflate(R.layout.fragment_signin, container, false)
-        enterUserNameSignIn = rootView.findViewById(R.id.editTextUserNameSignIn)
-        enterPasswordSignIn = rootView.findViewById(R.id.editTextPassport)
-        buttonOkGo = rootView.findViewById(R.id.buttonOkRegistration)
-        buttonNeedRegistration = rootView.findViewById(R.id.buttonNeedRegistration)
-        cancelBtn = rootView.findViewById(R.id.buttonCancelSignIn)
+    private val bind by viewBinding(FragmentSigninBinding::bind)
 
-        buttonOkGo.setOnClickListener {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        (requireActivity().application as App).getappComponent().inject(this)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        bind.buttonOkRegistration.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launch {
 
-                  var  username:String = enterUserNameSignIn.text.toString()
-                  var  password:String = enterPasswordSignIn.text.toString()
+                val username = bind.editTextUserNameSignIn.text.toString()
+                val password = bind.editTextPassport.text.toString()
 
-                viewmodelSignIn.logInUser(username,password)
+                viewmodelSignIn.logInUser(username, password)
                 viewmodelMain.checkIfUserEnterVM()
-                if (viewmodelMain.enterUserNow.value!=null){
-                        findNavController().navigate(R.id.action_fragmentSignIn_to_fragmentCoordList)
-                }else{
+                if (viewmodelMain.enterUserNow.value != null) {
+                    findNavController().navigate(R.id.action_fragmentSignIn_to_fragmentCoordList)
+                } else {
                     notSuccesfulEnter()
                     Toast.makeText(requireContext(), " Не удалось войти ", Toast.LENGTH_LONG).show()
                 }
             }
-            view?.let {
-                activity?.hideKeyboard(it)
-            }
+            view?.hideKeyboard()
         }
-        buttonNeedRegistration.setOnClickListener {
+        bind.buttonOkRegistration.setOnClickListener {
             findNavController().navigate(R.id.action_fragmentSignIn_to_fragmentAutrorization)
         }
-        cancelBtn.setOnClickListener{
+        bind.buttonCancelSignIn.setOnClickListener {
             findNavController().navigate(R.id.action_fragmentSignIn_to_fragmentCoordList)
         }
-        return rootView
     }
 
-    fun Context.hideKeyboard(view: View) {
-        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
-    }
+
 
     fun notSuccesfulEnter() {
         val builder =

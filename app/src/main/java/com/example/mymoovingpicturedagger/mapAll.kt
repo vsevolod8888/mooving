@@ -35,7 +35,6 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.maps.android.SphericalUtil
-import kotlinx.android.synthetic.main.map_all.*
 import kotlinx.coroutines.launch
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -44,7 +43,7 @@ import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 
-class mapAll : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener,
+class MapAll : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener,
     GoogleMap.OnMyLocationClickListener, GoogleMap.OnPolylineClickListener {
     private lateinit var mMap: GoogleMap
 

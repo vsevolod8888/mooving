@@ -1,10 +1,7 @@
 package com.example.mymoovingpicturedagger.dagger
 
 import com.example.mymoovingpicture.*
-import com.example.mymoovingpicturedagger.FragmentSignIn
-import com.example.mymoovingpicturedagger.FragmentArchiveList
-import com.example.mymoovingpicturedagger.FragmentAutrorization
-import com.example.mymoovingpicturedagger.MainActivity
+import com.example.mymoovingpicturedagger.*
 import com.example.mymoovingpicturedagger.foreground_service.ForegroundService
 import dagger.Component
 import javax.inject.Singleton
@@ -17,7 +14,7 @@ interface Component {
     fun inject(mapChosenRoute: MapChosenRoute)
     fun inject(mapDrawing: MapDrawing)
     fun inject(mapNewR: MapNewRoute)
-    fun inject(mapAll: mapAll)
+    fun inject(MapAll: MapAll)
     fun inject(frArch: FragmentArchiveList)
     fun inject(mainActivity: MainActivity)
     fun inject(fragmSignIn: FragmentSignIn)
