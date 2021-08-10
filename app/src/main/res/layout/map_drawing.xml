@@ -1,39 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Ma">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/mapViewDrawing"
+    <data>
+
+    </data>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    <Button
-        android:id="@+id/buttonSave"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:textColor="@color/black"
-        android:alpha="0.5"
-        android:background="@drawable/corner_round"
-        android:textSize="15dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp"
-        android:text="Сохранить" />
+        android:layout_height="match_parent"
+        tools:context=".Ma">
 
-    <TextView
-        android:id="@+id/tvDrawRoute"
-        android:layout_width="311dp"
-        android:layout_height="59dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:gravity="center"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginTop="50dp"
-        android:textColor="@color/black"
-        android:textSize="20dp" />
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/mapViewDrawing"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/buttonSave"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:textColor="@color/black"
+            android:alpha="0.5"
+            android:background="@drawable/corner_round"
+            android:textSize="15dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="40dp"
+            android:text="Сохранить" />
+
+        <TextView
+            android:id="@+id/tvDrawRoute"
+            android:layout_width="311dp"
+            android:layout_height="59dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:gravity="center"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="50dp"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
+    </RelativeLayout>
+</layout>

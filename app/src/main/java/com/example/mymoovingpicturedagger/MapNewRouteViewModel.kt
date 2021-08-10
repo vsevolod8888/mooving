@@ -10,20 +10,20 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-class MapNewRouteViewModel@Inject constructor(private val coordddrepo: Repozitory): ViewModel() {
-    private var numbOfRecord:Long?= null
-    fun getCoordByRecordNumber(recordNumber:Long):LiveData<List<CoordinatesDomain>>{
+class MapNewRouteViewModel @Inject constructor(private val coordddrepo: Repozitory) : ViewModel() {
+    private var numbOfRecord: Long? = null
+    fun getCoordByRecordNumber(recordNumber: Long): LiveData<List<CoordinatesDomain>> {
         return coordddrepo.getCoordinatesByRecordNumber(recordNumber)
     }
 
-    suspend fun lastNumberOfList():Long{
-        if(numbOfRecord!=null){
+    suspend fun lastNumberOfList(): Long {
+        if (numbOfRecord != null) {
             return numbOfRecord!!
         }
         var lastNumberOfList = coordddrepo.lastNumberOfList()
-        numbOfRecord =if(lastNumberOfList == null){
+        numbOfRecord = if (lastNumberOfList == null) {
             0
-        }else{
+        } else {
             lastNumberOfList
         }
         return numbOfRecord!!

@@ -10,7 +10,7 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [RepozitoryModule::class,ForAllViewModelModule::class])
+@Component(modules = [RepozitoryModule::class, ForAllViewModelModule::class])
 interface Component {
     fun inject(fragmentCoordList: FragmentCoordList)
     fun inject(fserv: ForegroundService)

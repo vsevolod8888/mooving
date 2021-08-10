@@ -1,8 +1,10 @@
 package com.example.mymoovingpicturedagger.dto
 
+import com.google.gson.annotations.SerializedName
+
 data class WhenUploadPhotoResponse(
-    var id: Int?,
-    var username: String?,
-    val email: String?,
-    var photo: String?
+    @SerializedName("recordNumber") var id: Int?,
+    @SerializedName("recordNumber") var username: String?,
+    @SerializedName("recordNumber") val email: String?,
+    @SerializedName("recordNumber") var photo: String?
 )

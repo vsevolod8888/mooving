@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -18,6 +19,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.mymoovingpicturedagger.R
 import com.example.mymoovingpicturedagger.dagger.App
+import com.example.mymoovingpicturedagger.databinding.ArchiveListBinding
 import com.example.mymoovingpicturedagger.databinding.MapChoosenRBinding
 import com.example.mymoovingpicturedagger.foreground_service.ForegroundService
 import com.example.mymoovingpicturedagger.helpers.viewBinding
@@ -30,7 +32,7 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.material.button.MaterialButton
 import com.google.maps.android.SphericalUtil
-import kotlinx.android.synthetic.main.map_choosen_r.*
+//import kotlinx.android.synthetic.main.map_choosen_r.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -38,22 +40,23 @@ import javax.inject.Inject
 class MapChosenRoute : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener,
     GoogleMap.OnMyLocationClickListener {
     private lateinit var mMap: GoogleMap
+    lateinit var binding: com.example.mymoovingpicturedagger.databinding.MapChoosenRBinding
 
     @Inject
     lateinit var viewModelProvider: ViewModelProvider.Factory
     val viewModelMapChoosenRoute: MapChosenRouteViewModel by viewModels { viewModelProvider }
 
 
-    //  var distance = 0
     var idd: Long? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        mapViewChoosen.onCreate(savedInstanceState)
-        mapViewChoosen.onResume()
-        mapViewChoosen.getMapAsync(this)
+        binding.mapViewChoosen.onCreate(savedInstanceState)
+        binding.mapViewChoosen.onResume()
+        binding.mapViewChoosen.getMapAsync(this)
     }
 
     @SuppressLint("MissingPermission", "SetTextI18n")
@@ -70,7 +73,7 @@ class MapChosenRoute : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationBut
                     val idRoute = it[0].recordNumber
                     viewLifecycleOwner.lifecycleScope.launch {
                         val name = viewModelMapChoosenRoute.getRouteById(idRoute)!!.recordRouteName
-                        tvTittle.setText(name)
+                        binding.tvTittle.setText(name)
                     }
                     val line: PolylineOptions = PolylineOptions()
                     line.clickable(true)
@@ -93,12 +96,12 @@ class MapChosenRoute : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationBut
                             distance += meters.toInt()
 
                             if (distance < 1000) {
-                                tvChoosen.setText("$distance м")
+                                binding.tvChoosen.setText("$distance м")
                             } else {
                                 //distance %= 1000
                                 val a = distance / 1000
                                 val b = distance % 1000
-                                tvChoosen.setText("$a км $b м")
+                                binding.tvChoosen.setText("$a км $b м")
                             }
 
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 16f))
@@ -116,17 +119,15 @@ class MapChosenRoute : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationBut
         savedInstanceState: Bundle?
     ): View? {
         (requireActivity().application as App).getappComponent().inject(this)
-        val view: View = inflater.inflate(R.layout.map_choosen_r, container, false)
-        val btnBack: MaterialButton = view.findViewById(R.id.buttonBack)
-        val btnContinue: MaterialButton = view.findViewById(R.id.buttonContinue)
-        val btnStop: MaterialButton = view.findViewById(R.id.buttonStop)
-        btnStop.visibility = View.GONE
-        val tv: TextView = view.findViewById(R.id.tvChoosen)
-
-        btnBack.setOnClickListener {
+        binding = DataBindingUtil.inflate<MapChoosenRBinding>(
+            inflater,
+            R.layout.map_choosen_r, container, false
+        )
+        binding.buttonStop.visibility = View.GONE
+        binding.buttonBack.setOnClickListener {
             this.findNavController().navigate(R.id.action_mapChosenRoute_to_fragmentCoordList)
         }
-        btnContinue.setOnClickListener {
+        binding.buttonContinue.setOnClickListener {
 
             val builder =
                 android.app.AlertDialog.Builder(
@@ -140,24 +141,24 @@ class MapChosenRoute : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationBut
                 ) { dialog, which ->
                     ForegroundService.timeRepeat = 600000
                     ForegroundService.startService(requireContext(), "", idd.toString())
-                    btnContinue.visibility = View.GONE
-                    btnStop.visibility = View.VISIBLE
+                    binding.buttonContinue.visibility = View.GONE
+                    binding.buttonStop.visibility = View.VISIBLE
                 }
                 .setNeutralButton(
                     "6 сек"
                 ) { dialog, which ->
                     ForegroundService.timeRepeat = 6000
                     ForegroundService.startService(requireContext(), "", idd.toString())
-                    btnContinue.visibility = View.GONE
-                    btnStop.visibility = View.VISIBLE
+                    binding.buttonContinue.visibility = View.GONE
+                    binding.buttonStop.visibility = View.VISIBLE
                 }
                 .setNegativeButton(
                     "1 мин"
                 ) { dialog, which ->
                     ForegroundService.timeRepeat = 60000
                     ForegroundService.startService(requireContext(), "", idd.toString())
-                    btnContinue.visibility = View.GONE
-                    btnStop.visibility = View.VISIBLE
+                    binding.buttonContinue.visibility = View.GONE
+                    binding.buttonStop.visibility = View.VISIBLE
                 }
             val alert = builder.create()
             alert.setOnShowListener {
@@ -168,7 +169,6 @@ class MapChosenRoute : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationBut
                 val btnNeuteral = alert.getButton(Dialog.BUTTON_NEUTRAL)
                 btnNeuteral.textSize = 10f
                 btnNeuteral.setTextColor(resources.getColor(R.color.purple_200))
-
 
                 val btnNegative = alert.getButton(Dialog.BUTTON_NEGATIVE)
                 btnNeuteral.textSize = 14f
@@ -187,16 +187,12 @@ class MapChosenRoute : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationBut
             val tv = alert.findViewById<View>(textViewId) as TextView
             tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER)                            // заголовок по центру
             tv.setTextColor(resources.getColor(R.color.black))
-
-
-
         }
-        btnStop.setOnClickListener {
+        binding.buttonStop.setOnClickListener {
             ForegroundService.stopService(requireContext())
             this.findNavController().navigate(R.id.action_mapChosenRoute_to_fragmentCoordList)
         }
-
-        return view
+        return binding.root
     }
 
     override fun onMyLocationButtonClick(): Boolean {

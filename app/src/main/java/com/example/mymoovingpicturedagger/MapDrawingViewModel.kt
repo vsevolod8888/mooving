@@ -14,7 +14,8 @@ class MapDrawingViewModel @Inject constructor(private val coordddrepo: Repozitor
     fun getCoordByRecordNumber(recordNumber: Long): LiveData<List<CoordinatesDomain>> {
         return coordddrepo.getCoordinatesByRecordNumber(recordNumber)
     }
-    fun getSharedPreferencesRouteNameVM():String?{
+
+    fun getSharedPreferencesRouteNameVM(): String? {
         return coordddrepo.getSharedPreferencesRouteName()
     }
 
@@ -57,7 +58,6 @@ class MapDrawingViewModel @Inject constructor(private val coordddrepo: Repozitor
             )
         coordddrepo.insertRoute(newRoute)
     }
-
     suspend fun getCoordinatesByRecordNumberSusVM(kk: Long): List<CoordinatesDomain> {
         return coordddrepo.getCoordinatesByRecordNumberSus(kk)
     }

@@ -23,6 +23,7 @@ abstract class ForAllViewModelModule { // возвращает фабрику, �
     @IntoMap
     @ViewModelKey(FragmentCoordListViewModel::class)
     abstract fun bindFragmentCoordViewModel(viewModel: FragmentCoordListViewModel?): ViewModel?
+
     @Binds
     @IntoMap
     @ViewModelKey(FragmentSignInViewModel::class)

@@ -1,4 +1,5 @@
 package com.example.mymoovingpicturedagger.adapter
+
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,9 +13,9 @@ import com.google.android.material.button.MaterialButton
 
 class Adapter(
     var routeListener: RouteListener
-) :
-    ListAdapter<RouteDomain, Adapter.RouteHolder>(SleepNightDiffCallback()) {
+) : ListAdapter<RouteDomain, Adapter.RouteHolder>(SleepNightDiffCallback()) {
     var selectedItemPosition: Int = -1 // для чего это???
+    var passportsAndNames: HashMap<Int, String> = HashMap()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RouteHolder {
         return RouteHolder.from(parent)
@@ -26,14 +27,13 @@ class Adapter(
             routeListener.onClickK(item)
             selectItemPosition(position)
         }
-        val btnDownload =holder.itemView.findViewById<MaterialButton>(R.id.buttonDownload)
+        val btnDownload = holder.itemView.findViewById<MaterialButton>(R.id.buttonDownload)
 
         if (item.isClicked) {
             btnDownload.setBackgroundResource(R.drawable.ic_ready_downloaded)
         } else {
             btnDownload.setBackgroundResource(R.drawable.ic_upload_foreground)
         }
-
         btnDownload.setOnClickListener {
             routeListener.onUploadOnSErverClick(item)
             selectItemPosition(position)
@@ -42,12 +42,10 @@ class Adapter(
             item!!
         )
     }
-
     fun selectItemPosition(itemPos: Int) {
         selectedItemPosition = itemPos
         notifyDataSetChanged()
     }
-
     class RouteHolder(val binding: RouteHolderNewBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
@@ -56,7 +54,6 @@ class Adapter(
             binding.route = item
             binding.executePendingBindings()
         }
-
         companion object {
             fun from(parent: ViewGroup): RouteHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
@@ -85,7 +82,7 @@ class SleepNightDiffCallback : DiffUtil.ItemCallback<RouteDomain>() {
 
 }
 
-interface RouteListener {        // ???????????
+interface RouteListener {
     fun onClickK(itemDetail: RouteDomain)
     fun onUploadOnSErverClick(itemDetail: RouteDomain)
 }

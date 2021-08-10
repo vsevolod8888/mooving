@@ -37,21 +37,25 @@ class Repozitory(val database: CoordinatcchicDatabase, val context: Context) {
         Transformations.map(database.coorddao.getRoutes()) {
             it.asDomainRouteModel() //  используйте Transformations.map для преобразования списка объектов базы данных в список объектов домена
         }
-    fun getSharedPreferencesTimeRepeat():Int?{
+
+    fun getSharedPreferencesTimeRepeat(): Int? {
         val lastButtonState: Int? = sharedPref?.getInt(KEY_BUTTON_TIME_REPEAT, 6000)
         return lastButtonState
     }
-    fun putSharedPreferencesTimeRepeat(pref:Int){
+
+    fun putSharedPreferencesTimeRepeat(pref: Int) {
         with(sharedPref?.edit()) {
             this?.putInt(KEY_BUTTON_TIME_REPEAT, pref)
             this?.apply()
         }
     }
-    fun getSharedPreferencesRouteName():String?{
+
+    fun getSharedPreferencesRouteName(): String? {
         val routeName: String? = sharedPref?.getString(KEY_ROUTE_NAME, "Имя по умолчанию")
         return routeName
     }
-    fun putSharedPreferencesRouteName(pref:String){
+
+    fun putSharedPreferencesRouteName(pref: String) {
         with(sharedPref?.edit()) {
             this?.putString(KEY_ROUTE_NAME, pref)
             this?.apply()

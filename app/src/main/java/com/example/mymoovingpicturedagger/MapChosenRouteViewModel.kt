@@ -12,12 +12,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-class MapChosenRouteViewModel@Inject constructor(private val coordddrepo: Repozitory): ViewModel() {
-   // var coordddrepo: Repozitory = Repozitory(getDatabase(application))
+class MapChosenRouteViewModel @Inject constructor(private val coordddrepo: Repozitory) :
+    ViewModel() {
 
-fun getCoordinatesBeId(id:Long):LiveData<List<CoordinatesDomain>>{
+    fun getCoordinatesBeId(id: Long): LiveData<List<CoordinatesDomain>> {
         return coordddrepo.getCoordinatesByRecordNumber(id)
     }
+
     suspend fun getRouteById(id: Long): RouteDomain? {
         return coordddrepo.getRouteById(id)
     }

@@ -8,8 +8,8 @@ import com.example.mymoovingpicturedagger.domain.CoordinatesDomain
 import com.example.mymoovingpicturedagger.domain.RouteDomain
 
 @Entity(tableName = "route")
-data class RouteEntity(                        //WeatherDatabase
-    @PrimaryKey//(autoGenerate = true)                                //(autoGenerate = true)
+data class RouteEntity(   //WeatherDatabase
+    @PrimaryKey//(autoGenerate = true)
     var id: Long,//= System.currentTimeMillis()
     @ColumnInfo(name = "checktime")
     var checkTime: Long,//= System.currentTimeMillis()
@@ -19,7 +19,7 @@ data class RouteEntity(                        //WeatherDatabase
     var isClicked: Boolean
 )// добавить поле булеан загружено
 
-fun List<RouteEntity>.asDomainRouteModel(): List<RouteDomain> { // функция для преобразования DatabaseVideo объектов базы данных в объекты домена
+fun List<RouteEntity>.asDomainRouteModel(): List<RouteDomain> {
     return map {
         val routeDomain = RouteDomain(
             id = it.id,
@@ -30,8 +30,7 @@ fun List<RouteEntity>.asDomainRouteModel(): List<RouteDomain> { // функци�
         routeDomain
     }
 }
-
-fun RouteEntity.asDomainRouteModel(): RouteDomain { // функция для преобразования Database объектов базы данных в объекты домена
+fun RouteEntity.asDomainRouteModel(): RouteDomain {
     return RouteDomain(
         id = this.id,
         time = this.checkTime,
@@ -39,8 +38,6 @@ fun RouteEntity.asDomainRouteModel(): RouteDomain { // функция для п�
         isClicked = this.isClicked
     )
 }
-
-
 @Entity(tableName = "coord")
 data class CoordinatesEntity(                        //WeatherDatabase
     @PrimaryKey(autoGenerate = true)

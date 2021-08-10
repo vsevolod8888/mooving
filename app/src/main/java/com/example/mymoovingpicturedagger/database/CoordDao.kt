@@ -18,18 +18,18 @@ interface CoordDao {
     suspend fun deleteAllRoutes()
 
     @Query("DELETE FROM route WHERE id = :id")
-    suspend fun deleteRouteById(id: Long)                     // было id: Int
+    suspend fun deleteRouteById(id: Long)
 
     @Query("DELETE FROM coord WHERE recordNumber = :recordNumberId")
-    suspend fun deleteCoordByRecordNumber(recordNumberId: Long)  //было recordNumber: Int
+    suspend fun deleteCoordByRecordNumber(recordNumberId: Long)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCoordList(coordlist: List<CoordinatesEntity>)
 
-    @Query("SELECT * FROM coord WHERE recordNumber =:routeId")         // получ. лист CoordinatesEntity по recordNumber
+    @Query("SELECT * FROM coord WHERE recordNumber =:routeId")    // получ. лист CoordinatesEntity по recordNumber
     suspend fun getCoordtList(routeId: Int): List<CoordinatesEntity>?
 
-    @Query("SELECT * FROM route WHERE id =:routeId")         // получ. лист CoordinatesEntity по recordNumber
+    @Query("SELECT * FROM route WHERE id =:routeId")   // получ. лист CoordinatesEntity по recordNumber
     suspend fun getRouteById(routeId: Long): RouteEntity?            //біло routeId: Int
 
     @Query("SELECT * FROM coord WHERE recordNumber =:routeId")         // получ. лист CoordinatesEntity по recordNumber
@@ -48,25 +48,25 @@ interface CoordDao {
     suspend fun getLastCoord(): CoordinatesEntity?
 
     @Query("SELECT * FROM coord ORDER BY id DESC")
-    fun getAllCoords(): LiveData<List<CoordinatesEntity>>                                     //LiveData<>
+    fun getAllCoords(): LiveData<List<CoordinatesEntity>>
 
     @Query("SELECT MAX(recordNumber) FROM coord ")
-    suspend fun getLastRecordNumber(): Long?      // было Int LiveData<   >                                     // получить последний номер записи
+    suspend fun getLastRecordNumber(): Long?
 
-    @Query("SELECT * FROM coord WHERE recordNumber=:recordNumberId ORDER BY checktime ")//
-    fun getListByUnicalRecordNumber(recordNumberId: Long?): LiveData<List<CoordinatesEntity>>   // LiveData<Integer?>    список координат по определенному номеру записи
+    @Query("SELECT * FROM coord WHERE recordNumber=:recordNumberId ORDER BY checktime ")
+    fun getListByUnicalRecordNumber(recordNumberId: Long?): LiveData<List<CoordinatesEntity>>
 
-    @Query("SELECT * FROM coord WHERE recordNumber=:recordNumberId ORDER BY checktime ")//
-    suspend fun getListByUnicalRecordNumberSuspend(recordNumberId: Long?): List<CoordinatesEntity> //было recordNumberID: Int
+    @Query("SELECT * FROM coord WHERE recordNumber=:recordNumberId ORDER BY checktime ")
+    suspend fun getListByUnicalRecordNumberSuspend(recordNumberId: Long?): List<CoordinatesEntity>
 
     @Query("SELECT DISTINCT recordNumber FROM coord ORDER BY recordNumber ")
-    fun getOnlyRecordNumbersList(): LiveData<List<Int?>>                      // сптсок из recordNumber
+    fun getOnlyRecordNumbersList(): LiveData<List<Int?>>
 
-    @Query("SELECT DISTINCT id FROM route ORDER BY id ")                // список id маршрутов
+    @Query("SELECT DISTINCT id FROM route ORDER BY id ")
     suspend fun getOnlyIdList(): List<Long>
 
     @Query("SELECT COUNT (*) FROM coord")
-    suspend fun getCountNumberOfRecords(): Int                                 // Посчитать к-во записей в БД suspend
+    suspend fun getCountNumberOfRecords(): Int
 
     @Query("SELECT COUNT (*) FROM route")
     fun getCountNumberOfRecords2(): Int

@@ -8,9 +8,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -19,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.mymoovingpicturedagger.MapAllViewModel
 import com.example.mymoovingpicturedagger.R
 import com.example.mymoovingpicturedagger.dagger.App
+import com.example.mymoovingpicturedagger.databinding.MapAllBinding
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.BarData
@@ -28,14 +28,12 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.maps.android.SphericalUtil
-import kotlinx.android.synthetic.main.map_all.*
 import kotlinx.coroutines.launch
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -47,6 +45,7 @@ import kotlin.collections.ArrayList
 class mapAll : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener,
     GoogleMap.OnMyLocationClickListener, GoogleMap.OnPolylineClickListener {
     private lateinit var mMap: GoogleMap
+    lateinit var binding: MapAllBinding
 
     @Inject
     lateinit var viewModelProvider: ViewModelProvider.Factory
@@ -66,11 +65,12 @@ class mapAll : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationButtonClick
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        mapViewAll.onCreate(savedInstanceState)
-        mapViewAll.onResume()
-        mapViewAll.getMapAsync(this)
+        binding.mapViewAll.onCreate(savedInstanceState)
+        binding.mapViewAll.onResume()
+        binding.mapViewAll.getMapAsync(this)
 
     }
+
     @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
@@ -78,15 +78,15 @@ class mapAll : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationButtonClick
         mMap.setOnMyLocationButtonClickListener(this)               // нажатие на кнопку my location
         mMap.setOnMyLocationClickListener(this)                     // нажатие на синюю точку
         mMap.setOnPolylineClickListener(this)                       // передал кликлистенер н
-      //  var id: Int? = arguments?.getInt("amount")
+        //  var id: Int? = arguments?.getInt("amount")
         lifecycleScope.launch {
             listRoutesId = // в чём отличие lastNumberOfList ??? это лист id из route
                 viewModelMain.getOnlyIdListVM()  // лист из айдишек таблицы route
             Log.d("AAA", listRoutesId.toString())
             var i = 0
             listRoutesId.forEach {
-                var distance: Int = 0
-                val line: PolylineOptions = PolylineOptions()
+                var distance = 0
+                val line = PolylineOptions()
                 line.clickable(true)
                 val coordlist = viewModelMain.getCoordinatesBeIdSuspend(it)
                 val latLngBuilder = LatLngBounds.Builder()
@@ -137,7 +137,10 @@ class mapAll : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationButtonClick
                     polylinesMap.put(polyline.id, polyline)
                 }
 
-                val data = BarEntry(i++.toFloat(), distance.toFloat()) /// добавил 3-й параметрррррррррррррр
+                val data = BarEntry(
+                    i++.toFloat(),
+                    distance.toFloat()
+                )
                 visitors.add(data)
 
 
@@ -159,7 +162,7 @@ class mapAll : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationButtonClick
                 xvalues.add(timeToString(coordlist[0].time))
             }
 
-           val barDataSet = BarDataSet(visitors, "Маршруты")
+            val barDataSet = BarDataSet(visitors, "Маршруты")
             barDataSet.colors = ourColours//ColorTemplate.COLORFUL_COLORS.toMutableList()
 
             barDataSet.valueTextColor = resources.getColor(R.color.black)
@@ -167,27 +170,26 @@ class mapAll : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationButtonClick
             val barData = BarData(barDataSet)
             barChart.setFitBars(true)
             barChart.data = barData
-            var xAxis = barChart.xAxis
+            val xAxis = barChart.xAxis
             xAxis.valueFormatter = IndexAxisValueFormatter(xvalues)
             xAxis.labelRotationAngle = 270F
             xAxis.textSize = 20F
             xAxis.setGranularity(1f)
-            val yAxisLeft:YAxis = barChart.axisLeft
-            val yAxisRight:YAxis = barChart.axisRight
-           // val custom: ValueFormatter = MyValueFormatter()
-            val custom = object :  ValueFormatter() {
+            val yAxisLeft: YAxis = barChart.axisLeft
+            val yAxisRight: YAxis = barChart.axisRight
+            val custom = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
 
                     return value.toInt().toString() + " м"
                 }
             }
 
-            yAxisLeft.valueFormatter =custom//ValueFormatter?
+            yAxisLeft.valueFormatter = custom//ValueFormatter?
             yAxisRight.valueFormatter = custom
-            barChart.description.text = "Приветик"
-            barChart.animateY(2000)
+            binding.barChart.description.text = "Приветик"
+            binding.barChart.animateY(2000)
             // barChart.animateX(2000)
-            barChart.invalidate()
+            binding.barChart.invalidate()
         }
         mMap.setOnMapClickListener(object : GoogleMap.OnMapClickListener {
             override fun onMapClick(latlng: LatLng) {// Очищает ранее затронутую позицию
@@ -196,104 +198,105 @@ class mapAll : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationButtonClick
                 val location = LatLng(latlng.latitude, latlng.longitude)
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 14f))
                 polylinesMap.forEach {
-                    val pol: Polyline? = it.value
-                    pol!!.width = 8f
+                    val pol: Polyline = it.value
+                    pol.width = 8f
                 }
                 setDistanseToTextView(distanceAll)
-                tvTwo.setText("")
+                binding.tvTwo.setText("")
 
             }
         })
 
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         (requireActivity().application as App).getappComponent().inject(this)
-        val view: View = inflater.inflate(R.layout.map_all, container, false)
-        val btnBack: Button = view.findViewById(R.id.buttonBack)
-        val btnGrBack: Button = view.findViewById(R.id.buttonGraphicBack)
-        val btnGraphic: Button = view.findViewById(R.id.buttonGraphic)
-        val mapView:MapView = view.findViewById(R.id.mapViewAll)
-        val tvAll:TextView = view.findViewById(R.id.tvAll)
-        val tvTwo:TextView = view.findViewById(R.id.tvTwo)
+        binding = DataBindingUtil.inflate<MapAllBinding>(
+            inflater,
+            R.layout.map_all, container, false
+        )
 
 
-
-        btnGrBack.visibility = View.GONE
-        btnBack.setOnClickListener {
+        binding.buttonGraphicBack.visibility = View.GONE
+        binding.buttonBack.setOnClickListener {
             this.findNavController().navigate(R.id.action_mapAll_to_fragmentCoordList)
         }
-        barChart = view.findViewById(R.id.barChart) as BarChart
 
-        barChart.visibility = View.GONE
 
-        btnGraphic.setOnClickListener {
+        binding.barChart.visibility = View.GONE
+
+        binding.buttonGraphic.setOnClickListener {
             barChart.visibility = View.VISIBLE
-            btnGrBack.visibility = View.VISIBLE
-            btnGraphic.visibility = View.GONE
-            btnBack.visibility = View.GONE
-            mapView.alpha = 0.3F
-            tvAll.alpha = 0.3F
+            binding.buttonGraphicBack.visibility = View.VISIBLE
+            binding.buttonGraphic.visibility = View.GONE
+            binding.buttonBack.visibility = View.GONE
+            binding.mapViewAll.alpha = 0.3F
+            binding.tvAll.alpha = 0.3F
         }
-        btnGrBack.setOnClickListener {
+        binding.buttonGraphicBack.setOnClickListener {
             barChart.visibility = View.GONE
-            btnGrBack.visibility = View.GONE
-            btnBack.visibility = View.VISIBLE
-            btnGraphic.visibility = View.VISIBLE
-            mapView.alpha = 1F
-            tvAll.alpha = 1F
+            binding.buttonGraphicBack.visibility = View.GONE
+            binding.buttonBack.visibility = View.VISIBLE
+            binding.buttonGraphic.visibility = View.VISIBLE
+            binding.mapViewAll.alpha = 1F
+            binding.tvAll.alpha = 1F
         }
-        return view
+        return binding.root
     }
+
     override fun onMyLocationButtonClick(): Boolean {
         Toast.makeText(context, "MyLocation button clicked", Toast.LENGTH_SHORT)
             .show()
         return false
     }
+
     override fun onMyLocationClick(location: Location) {
         Toast.makeText(context, "Current location:\n$location", Toast.LENGTH_LONG)
             .show()
     }
+
     override fun onPolylineClick(p0: Polyline) {
         //val i:Int = viewModelMain.
         val rounenumber =
             polylineMap.get(p0.id) // по клику на полилинию дост id маршрута, а по ней всё остальное из бд
         val d = distanceMap.get(p0.id)
         viewLifecycleOwner.lifecycleScope.launch {
-            tvAll.setText("$d")
+            binding.tvAll.setText("$d")
             val infa = viewModelMain.getInfoById(rounenumber!!)
-            tvTwo.setText(infa)
+            binding.tvTwo.setText(infa)
             selectedPol(p0.id)
         }
-
     }
+
     fun selectedPol(id: String) {
         val selectedPol: Polyline? = polylinesMap.get(id)        // sise = 9, id = pl8  id.toInt()
-     //   selectedPol!!.width = 16f
+        //   selectedPol!!.width = 16f
         polylinesMap.forEach {
-            val pol: Polyline? = it.value
+            val pol: Polyline = it.value
             if (pol != selectedPol) {
                 pol!!.width = 8f
             } else {
-                pol!!.width = 22f
+                pol.width = 22f
             }
         }
     }
+
     fun setDistanseToTextView(dist: Int) {
         if (dist < 1000) {
-            tvAll.setText("$dist м")
+            binding.tvAll.setText("$dist м")
         } else {
             val a = dist / 1000
             val b = dist % 1000
-            tvAll.setText("$a км $b м")
+            binding.tvAll.setText("$a км $b м")
         }
     }
-    fun timeToString(t:Long): String {
+
+    fun timeToString(t: Long): String {
         t.let {
-           // val time: Long = item.time
             val locale = Locale("ru", "RU")
             val format2: DateFormat = SimpleDateFormat(("dd MMM"), locale)
             val daytoday: String = format2.format(t).capitalize()

@@ -60,7 +60,6 @@ class EnterRouteName : Fragment() {
                 radBut3.isChecked = true
             }
         }
-        lastButtonState!!.equals(1)
 
         btnEnterRouteName.setOnClickListener {
             val selectedId: Int = rg.checkedRadioButtonId

@@ -39,14 +39,12 @@ class ForegroundService() : LifecycleService(), CoroutineScope {
     @Inject
     lateinit var coordddrepo: Repozitory
 
-    //val coordddrepo by lazy { Repozitory(getDatabase(application)) } // by lazy переменная созда'тся в момент первого обращения
     private val fusedLocationClient: FusedLocationProviderClient by lazy {
         LocationServices.getFusedLocationProviderClient(
             applicationContext
         )
     }
     val ACTION_STOP_SERVICE: String = "Stop"
-    val NOTIFCATION_ID: Int = 1
     var numbOfRecord: Long? = null
     var timeStartRoute: Long? = null
     lateinit var nameOfRoute: String
@@ -58,12 +56,15 @@ class ForegroundService() : LifecycleService(), CoroutineScope {
         fun startService(
             context: Context,
             message: String,
-            routeId: String ?= null           // по умолчанию чтобі біло нул
-        ) {        // положил в этом методе в enterRouteFragment
+            routeId: String? = null
+        ) {
             val startIntent = Intent(context, ForegroundService::class.java)
-            startIntent.putExtra("inputExtra", message)                // это походу name of route
+            startIntent.putExtra("inputExtra", message)
             if (routeId != null) {
-                startIntent.putExtra("inputttt", routeId.toString())   // одно значение по 1 ключу или лист значений
+                startIntent.putExtra(
+                    "inputttt",
+                    routeId.toString()
+                )
             }
 
             ContextCompat.startForegroundService(context, startIntent)
@@ -82,10 +83,9 @@ class ForegroundService() : LifecycleService(), CoroutineScope {
         if (intent!!.action != null && intent.action.equals("STOP_ACTION")) {
             stopForeground(true);
         }
-
         nameOfRoute =
-            intent.getStringExtra("inputExtra").toString()                 /// тут я его достал
-        idd = intent.getStringExtra("inputttt")?.toLong()                           //было toInt()
+            intent.getStringExtra("inputExtra").toString()
+        idd = intent.getStringExtra("inputttt")?.toLong()
         Log.d("GGGG", idd.toString())
         return START_NOT_STICKY
     }
@@ -169,7 +169,10 @@ class ForegroundService() : LifecycleService(), CoroutineScope {
                         .addOnSuccessListener { location: Location? ->
                             val lattt: Double? = location?.latitude
                             val loggg: Double? = location?.longitude
-                            Log.d("ОШИБКА", "$numbOfRecord != null && $lattt != null && $loggg != null")
+                            Log.d(
+                                "ОШИБКА",
+                                "$numbOfRecord != null && $lattt != null && $loggg != null"
+                            )
                             launch {
                                 if (numbOfRecord != null && lattt != null && loggg != null) {
                                     saveCurrentCoordinates(                                        // сохр.координату
@@ -190,7 +193,7 @@ class ForegroundService() : LifecycleService(), CoroutineScope {
 
     suspend fun saveNewRoute(
         name: String
-    ) {                         // добавляем numOfRecord
+    ) {
         if (coordddrepo.getCoordinatesByRecordNumberSus(numbOfRecord!!).size > 0) {
             val newRoute =
                 RouteEntity(
@@ -199,7 +202,7 @@ class ForegroundService() : LifecycleService(), CoroutineScope {
                     recordRouteName = name,
                     isClicked = false
                 )
-            coordddrepo.insertRoute(newRoute)// withContext(Dispatchers.IO){  // все что внутри withContext(Dispatchers.IO)  в другом потоке
+            coordddrepo.insertRoute(newRoute)
         } else {
             Toast.makeText(
                 this,
@@ -214,21 +217,19 @@ class ForegroundService() : LifecycleService(), CoroutineScope {
         lon: Double,
         t: Long,
         n: Long
-    ) {                         // добавляем numOfRecord
+    ) {
 
         val newcoord = CoordinatesEntity(
             id = 0,
             checkTime = t,
-            recordNumber = n,                                                              //recordRouteName = nameOfRoute,
+            recordNumber = n,
             Lattitude = lat,
             Longittude = lon
         )
         Log.d("ОШИБКА", newcoord.toString())
 
-//        /// withContext(Dispatchers.IO){       // все что внутри withContext(Dispatchers.IO)  в другом потоке
+// все что внутри withContext(Dispatchers.IO)  в другом потоке
         coordddrepo.insertCoord(newcoord)
-//        // }
-
     }
 
     override fun onBind(intent: Intent): IBinder? {
@@ -246,13 +247,13 @@ class ForegroundService() : LifecycleService(), CoroutineScope {
             manager!!.createNotificationChannel(serviceChannel)
         }
     }
+
     override fun onDestroy() {
         super.onDestroy()
         GlobalScope.launch {              //GlobalScope - в ланче довыполняется до конца
             if (nameOfRoute.isNotEmpty() && numbOfRecord != null) {
                 saveNewRoute(nameOfRoute)
             }
-            // suspend
         }
         cancel()
     }

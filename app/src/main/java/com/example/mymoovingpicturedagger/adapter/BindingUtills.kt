@@ -17,8 +17,7 @@ fun TextView.setHeading(item: RouteDomain?) {
         text = "${item.recordRouteName} "
     }
 }
-//var format: DateFormat =
-//    SimpleDateFormat("EEEE, dd MMM yyyy HH:mm", Locale.UK)
+
 @SuppressLint("SetTextI18n")
 @BindingAdapter("setTime")
 fun TextView.setTime(item: RouteDomain?) {

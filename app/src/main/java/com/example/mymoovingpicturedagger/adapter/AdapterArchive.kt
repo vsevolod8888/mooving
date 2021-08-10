@@ -1,4 +1,5 @@
 package com.example.mymoovingpicturedagger.adapter
+
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -28,10 +29,11 @@ class AdapterArchive(
             routeListener.onDeleteClickK(item)
             selectItemPosition(position)
         }
-        holder.itemView.findViewById<MaterialButton>(R.id.btnDownloadArchiveRoute).setOnClickListener {
-            routeListener.onDownloadClick(item)
-            selectItemPosition(position)
-        }
+        holder.itemView.findViewById<MaterialButton>(R.id.btnDownloadArchiveRoute)
+            .setOnClickListener {
+                routeListener.onDownloadClick(item)
+                selectItemPosition(position)
+            }
         holder.bind(item)
     }
 
@@ -45,10 +47,10 @@ class AdapterArchive(
         fun bind(
             item: SendRouteDomain
         ) {
-            // var button:MaterialButton = itemView.findViewById(R.id.buttonDownload)
             binding.routeServer = item
             binding.executePendingBindings()
         }
+
         companion object {
             fun from(parent: ViewGroup): RouteHolderArchive {
                 val layoutInflater = LayoutInflater.from(parent.context)
@@ -66,6 +68,7 @@ class ArchiveDiffCallback : DiffUtil.ItemCallback<SendRouteDomain>() {
     ): Boolean {
         return oldItem.recordNumber == newItem.recordNumber
     }
+
     @SuppressLint("DiffUtilEquals")
     override fun areContentsTheSame(
         oldItem: SendRouteDomain,
@@ -74,6 +77,7 @@ class ArchiveDiffCallback : DiffUtil.ItemCallback<SendRouteDomain>() {
         return oldItem == newItem
     }
 }
+
 interface RouteArchiveListener {        // ???????????
     fun onDeleteClickK(itemDetail: SendRouteDomain)
     fun onDownloadClick(itemDetail: SendRouteDomain)
